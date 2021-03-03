@@ -1,0 +1,100 @@
+.registerContainer{
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.registerContainer  img{
+  width: 25rem;
+  margin-bottom: 1rem;
+}
+
+.registerContainer form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.registerContainer form h1{
+  color: var(--title);
+  font-weight: 900;
+  font-size: 2rem;
+
+  margin-bottom: 1rem;
+}
+
+.registerContainer form input{
+  width: 100%;
+  max-width: 270px;
+
+  height: 3rem;
+  padding: 1.25rem 1rem;
+
+  border-radius: 5px;
+  border: 0;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+
+  font-weight: 500;
+  font-size: 1.25rem;
+
+  margin-bottom: 1rem;
+}
+
+.registerContainer form button{
+  width: 100%;
+  max-width: 270px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 3rem;
+  padding: 1.25rem;
+
+  border: 0;
+  border-radius: 5px;
+  background-color: var(--orange2);
+  color: var(--linkText);
+
+  font-weight: bold;
+
+  margin-bottom: 1.25rem;
+
+  transition: background-color .2s;
+}
+
+.registerContainer form button:hover{
+  background-color: var(--orange);
+}
+
+.registerContainer form div{
+  width: 100%;
+  max-width: 270px;
+  display: flex;
+  justify-content: left;
+}
+
+.registerContainer form a{
+  font-size: 1rem;
+  font-weight: bold;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: opacity .2s;
+}
+
+.registerContainer form a:hover{
+  opacity: 0.9;
+}
+
+.registerContainer form a svg{
+  margin-right: 2px;
+  color: red;
+}
