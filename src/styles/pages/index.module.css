@@ -1,9 +1,65 @@
 .homeContainer{
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  text-align: center;
+}
+
+.homeContainer img{
+  width: 25rem;
+  margin-bottom: 3rem;
+}
+
+.homeContainer h1{
+  color: var(--title);
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+.homeContainer main{
+  width: 100%;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
+ .homeContainer main div{
+  margin-top: 2rem;
 
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+ .homeContainer main div a{
+  width: 100%;
+  max-width: 270px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 3rem;
+  padding: 1.25rem;
+
+  border: 0;
+  border-radius: 5px;
+  background-color: var(--orange2);
+  color: var(--linkText);
+
+  font-weight: bold;
+
+  margin-bottom: 1.25rem;
+
+  transition: background-color .2s;
+}
+
+ .homeContainer main div a:hover{
+  background-color: var(--orange);
+}

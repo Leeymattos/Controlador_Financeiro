@@ -1,11 +1,14 @@
 import ModalProvider from '../contexts/ModalContext'
+import { PurchaseProvider } from '../contexts/PurchaseContext'
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {
 
   return (
     <ModalProvider>
-      <Component {...pageProps} />
+      <PurchaseProvider>
+        <Component {...pageProps} />
+      </PurchaseProvider>
     </ModalProvider>
   )
 }
