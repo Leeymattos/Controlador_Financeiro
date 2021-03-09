@@ -1,16 +1,23 @@
 import styles from '../styles/pages/choiceUser.module.css'
 import Link from 'next/link'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {FiArrowLeft} from 'react-icons/fi'
+import Router from 'next/router'
 import axios from 'axios'
-import { PurchaseContext } from '../contexts/PurchaseContext'
+
 
 export default function ChoiceUser(props) {
-
-  const {setUserIdSelected} = useContext(PurchaseContext)
-
   const [users, setUsers] = useState([])
-  console.log(props.data)
+
+  const [userId, setUserId] = useState('')
+
+ function navigate(){
+    Router.push({
+      pathname: 'purchases',
+      query: {userId: userId}
+    })
+  }
+
   useEffect(() => {
     axios.get('/api/findUsers').then(response => {
       setUsers(response.data)
@@ -18,6 +25,7 @@ export default function ChoiceUser(props) {
   }, [])
 
   return (
+
     <div className={styles.choiceUserContainer}>
       <img src="/ilustration.svg" alt="ilustration" />
 
@@ -25,16 +33,14 @@ export default function ChoiceUser(props) {
       <main>
         
       
-        <select name="users" id="users" onChange={e=> {setUserIdSelected(e.target.value)}}>
+        <select name="users" id="users" onChange={e => setUserId(e.target.value)} value={userId}>
           <option value="0">Selecione um usuário</option>
           {users.map(user => (
             <option key={user.id} value={user.id}>{user.name}</option>
           ))}
         </select>
 
-        <Link href='/purchases' >
-          <a className={styles.linkNext}>Ir para contas</a>
-        </Link>
+        <button onClick={navigate} className={styles.linkNext}>ir para contas</button>
 
         <div>
           <Link href='/'><a className={styles.linkBack}> <FiArrowLeft size='20'/>Voltar para página inicial</a></Link>

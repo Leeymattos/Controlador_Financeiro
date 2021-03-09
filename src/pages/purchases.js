@@ -1,40 +1,49 @@
-import { Field, Form, Formik } from "formik"
+import { Form, Formik } from "formik"
 import { useContext, useEffect, useRef, useState } from "react"
 import Link from 'next/link'
-import { FiArrowLeft } from 'react-icons/fi'
-
-import { PurchaseContext } from "../contexts/PurchaseContext"
+import { FiArrowLeft, FiTrash } from 'react-icons/fi'
 
 import styles from '../styles/pages/purchase.module.css'
-import axios from "axios"
+
 import { ModalContext } from "../contexts/ModalContext"
+import { useRouter } from "next/router"
+import axios from "axios"
 
 
 export default function Purchases() {
 
-  const textinput = useRef(null)
+  const router = useRouter()
 
-  const { userIdSelected } = useContext(PurchaseContext)
-
+  const userId = router.query.userId
+  
   const { openUnsuccessfulModal } = useContext(ModalContext)
 
   const [purchases, setPurchases] = useState([])
+  const [total, setTotal] = useState([])
+
+  const firstInput = useRef(null)
 
 
   useEffect(() => {
-    axios.get('/api/findPurchases', {
-      headers: {
-        authorization: {
-          userId: userIdSelected
-        }
-      }
-    }).then(response => {
-      setPurchases(response.data)
-    })
-    
-  }, [userIdSelected, purchases])
 
-  console.log(purchases)
+     axios.get('/api/findPurchases', {
+       headers: {
+         authorization: userId
+       }
+     }).then(response => {
+      setPurchases(response.data)
+     
+    })
+
+    axios.get('/api/findPurchaseTotal', {
+      headers: {
+        authorization: userId
+      }
+    }).then(response=>{
+      setTotal(response.data)
+    })
+
+  }, [userId, purchases])
 
   async function handleSubmit(values, { resetForm }) {
 
@@ -42,25 +51,35 @@ export default function Purchases() {
       purchaseName: values.purchaseName,
       date: values.date,
       value: values.value,
-      payment: values.payment
+      payment: values.payment,
     }
 
     try {
-      await axios.post('/api/createPurchase', data, {
-        headers: {
-          authorization: {
-            userId: userIdSelected
-          }
+      await axios.post('/api/createPurchase', data,{
+        headers:{
+          authorization: userId
         }
       })
       resetForm({})
+      firstInput.current.focus()
+
     } catch (err) {
       openUnsuccessfulModal()
     }
   }
 
+  async function handleDelete(id){
+    console.log(userId)
+    await axios.delete('api/deletePurchase', {
+      headers:{
+        authorization: id
+      }
+    })
+    
+  }
+
   return (
-    <>
+
       <div className={styles.purchaseContainer}>
         <Formik
           onSubmit={handleSubmit}
@@ -71,20 +90,24 @@ export default function Purchases() {
             payment: ''
           }}
         >
-          <Form>
-            <img src="./ilustration2.svg" alt="ilustration2" />
-            <div>
+          {({
+            values,
+            handleChange
+          }) => (
+            <Form>
+              <div>
+                <h1> Insira os dados da sua compra: </h1>
+                <input type="text" ref={firstInput} placeholder='Compra' name='purchaseName' onChange={handleChange} value={values.purchaseName} autoFocus />
+                <input type="text" placeholder='Data' name='date' onChange={handleChange} value={values.date} />
+                <input type="text" placeholder='Valor' name='value' onChange={handleChange} value={values.value} />
+                <input type="text" placeholder='Forma de pagamento' name='payment' onChange={handleChange} value={values.payment} />
 
-              <h1> Insira os dados da sua compra: </h1>
-              <Field type='text' ref={textinput} name='purchaseName' placeholder='Compra' id='first' autoFocus />
-              <Field type='text' name='date' placeholder='Data' />
-              <Field type='text' name='value' placeholder='Valor' />
-              <Field type='text' name='payment' placeholder='Forma de pagamento' />
+                <button type='submit'>Cadastrar</button>
+              </div>
 
-              <button>Cadastrar</button>
-            </div>
+            </Form>
+          )}
 
-          </Form>
         </Formik>
 
         <div>
@@ -93,15 +116,25 @@ export default function Purchases() {
             <ol>
               {purchases.map(purchase => (
                 <li>
-                  {purchase.purchaseName}
+                  <div>
+                    {purchase.purchaseName}; {purchase.date}; {purchase.payment}; {purchase.value}
+
+
+                    <button type='button' onClick={() => handleDelete(purchase.id)}><FiTrash /></button>
+
+
+                  </div>
                 </li>
 
               ))}
 
             </ol>
-            <div></div>
+            <div className={styles.total}>
+              <h1>Total: {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+                  .format(total)}</h1>
+                 
+            </div>
           </div>
-          <img src="ilustration2inverse.svg" alt="ilustration2" />
         </div>
 
         <Link href='/choiceUser'>
@@ -109,6 +142,6 @@ export default function Purchases() {
         </Link>
 
       </div>
-    </>
+   
   )
 }

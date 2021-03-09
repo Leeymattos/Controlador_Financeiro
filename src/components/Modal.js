@@ -10,7 +10,7 @@ export default function Modal() {
     <div className={styles.overlay}>
       <div>
         <header>{modalStatusIsSuccessfull ? 'Sucesso!': 'Algo deu errado!' }</header>
-        <strong>{modalStatusIsSuccessfull ? 'Usuário cadastrado!' : 'Não cadastradado'}</strong>
+        <strong>{modalStatusIsSuccessfull ? 'Usuário cadastrado!' : 'Operação não realizada!'}</strong>
         {modalStatusIsSuccessfull ? <img src='./right.svg' alt='Certo'/>: <img src='./error.svg' alt='Erro' />}
         <button onClick={closeModal}><FaWindowClose size='25' color='red'/></button>
       </div>

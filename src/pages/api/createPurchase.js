@@ -1,8 +1,7 @@
 import connection from '../../database/connection'
 
-
-export default async function createPurchase(req, res){
-  const {purchaseName, date, value, payment} = req.body
+export default async function CreatePurchase(req, res){
+  const { purchaseName, date, value, payment } = req.body
 
   const userId = req.headers.authorization
 

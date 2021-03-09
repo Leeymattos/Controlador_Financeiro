@@ -1,6 +1,6 @@
 import connection from '../../database/connection'
 
-export default async function findUser(req, res){
+export default async function FindUsers(req, res){
 
   const users = await connection('users').select('*')
 

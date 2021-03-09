@@ -5,7 +5,6 @@ import styles from '../styles/pages/register.module.css'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useContext } from 'react'
 import { ModalContext } from '../contexts/ModalContext'
-
 import axios from 'axios'
 
 

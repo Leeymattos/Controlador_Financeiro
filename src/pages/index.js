@@ -10,8 +10,8 @@ export default function Home() {
         
 
         <div>
-          <Link href='register'> Novo Usuário</Link>
-          <Link href='choiceUser'>Fazer Contas</Link>
+          <Link href='/register'> Novo Usuário</Link>
+          <Link href='/choiceUser'>Fazer Contas</Link>
         </div>
 
         </main>
