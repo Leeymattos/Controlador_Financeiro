@@ -115,7 +115,7 @@ export default function Purchases() {
           <div>
             <ol>
               {purchases.map(purchase => (
-                <li>
+                <li key={purchase.id}>
                   <div>
                     {purchase.purchaseName}; {purchase.date}; {purchase.payment}; {purchase.value}
 
